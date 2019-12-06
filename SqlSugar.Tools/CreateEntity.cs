@@ -97,7 +97,7 @@ namespace SqlSugar.Tools
                     {
                         var tables = await this.LoadingTables(linkString, DataBaseType.SQLServer);
                         tables.Columns["TableName"].ColumnName = "label";
-                        var tablesJson = JsonConvert.SerializeObject(tables).Replace("\r\n", "").Replace("\\r\\n", "");
+                        var tablesJson = JsonConvert.SerializeObject(tables).Replace("\r\n", "").Replace("\\r\\n", "").Replace("\\", "\\\\");
                         tables.Clear(); tables.Dispose(); tables = null;
                         EvaluateJavascript($"setTables('{tablesJson}')", (value, exception) => { });
                     }
@@ -223,10 +223,15 @@ namespace SqlSugar.Tools
                 {
                     try
                     {
+                        var initPath = "";
+                        if (File.Exists($"{Environment.CurrentDirectory}\\default.ini"))
+                        {
+                            initPath = File.ReadAllText($"{Environment.CurrentDirectory}\\default.ini", Encoding.Default);
+                        }
                         var infos = JsonConvert.DeserializeObject<Dictionary<string, string>>(info);
                         var settings = JsonConvert.DeserializeObject<SettingsModel>(infos["settings"]);
                         var tableList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(infos["tableList"]);
-                        using (var folderBrowserDialog = new FolderBrowserDialog())
+                        using (var folderBrowserDialog = new FolderBrowserDialog { SelectedPath = initPath })
                         {
                             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                             {
@@ -237,6 +242,10 @@ namespace SqlSugar.Tools
                                     {
                                         await sw.WriteAsync(code);
                                     }
+                                }
+                                using (StreamWriter sw = new StreamWriter($"{Environment.CurrentDirectory}\\default.ini"))
+                                {
+                                    await sw.WriteAsync(folderBrowserDialog.SelectedPath);
                                 }
                                 EvaluateJavascript("saveAllTablesSuccess()", (value, exception) => { });
                             }
@@ -454,10 +463,15 @@ namespace SqlSugar.Tools
                 {
                     try
                     {
+                        var initPath = "";
+                        if (File.Exists($"{Environment.CurrentDirectory}\\default.ini"))
+                        {
+                            initPath = File.ReadAllText($"{Environment.CurrentDirectory}\\default.ini", Encoding.Default);
+                        }
                         var infos = JsonConvert.DeserializeObject<Dictionary<string, string>>(info);
                         var settings = JsonConvert.DeserializeObject<SettingsModel>(infos["settings"]);
                         var tableList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(infos["tableList"]);
-                        using (var folderBrowserDialog = new FolderBrowserDialog())
+                        using (var folderBrowserDialog = new FolderBrowserDialog { SelectedPath = initPath })
                         {
                             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                             {
@@ -468,6 +482,10 @@ namespace SqlSugar.Tools
                                     {
                                         await sw.WriteAsync(code);
                                     }
+                                }
+                                using (StreamWriter sw = new StreamWriter($"{Environment.CurrentDirectory}\\default.ini"))
+                                {
+                                    await sw.WriteAsync(folderBrowserDialog.SelectedPath);
                                 }
                                 EvaluateJavascript("saveAllTablesSuccess()", (value, exception) => { });
                             }
@@ -545,7 +563,7 @@ namespace SqlSugar.Tools
                     {
                         var tables = await this.LoadingTables(linkString, DataBaseType.MySQL);
                         tables.Columns["TableName"].ColumnName = "label";
-                        var tablesJson = JsonConvert.SerializeObject(tables).Replace("\r\n", "").Replace("\\r\\n", "");
+                        var tablesJson = JsonConvert.SerializeObject(tables).Replace("\r\n", "").Replace("\\r\\n", "").Replace("\\", "\\\\");
                         tables.Clear(); tables.Dispose(); tables = null;
                         EvaluateJavascript($"setTables('{tablesJson}')", (value, exception) => { });
                     }
@@ -671,10 +689,15 @@ namespace SqlSugar.Tools
                 {
                     try
                     {
+                        var initPath = "";
+                        if (File.Exists($"{Environment.CurrentDirectory}\\default.ini"))
+                        {
+                            initPath = File.ReadAllText($"{Environment.CurrentDirectory}\\default.ini", Encoding.Default);
+                        }
                         var infos = JsonConvert.DeserializeObject<Dictionary<string, string>>(info);
                         var settings = JsonConvert.DeserializeObject<SettingsModel>(infos["settings"]);
                         var tableList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(infos["tableList"]);
-                        using (var folderBrowserDialog = new FolderBrowserDialog())
+                        using (var folderBrowserDialog = new FolderBrowserDialog { SelectedPath = initPath })
                         {
                             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                             {
@@ -685,6 +708,10 @@ namespace SqlSugar.Tools
                                     {
                                         await sw.WriteAsync(code);
                                     }
+                                }
+                                using (StreamWriter sw = new StreamWriter($"{Environment.CurrentDirectory}\\default.ini"))
+                                {
+                                    await sw.WriteAsync(folderBrowserDialog.SelectedPath);
                                 }
                                 EvaluateJavascript("saveAllTablesSuccess()", (value, exception) => { });
                             }
@@ -759,7 +786,7 @@ namespace SqlSugar.Tools
                         var tables = await this.LoadingTables(linkString, DataBaseType.PostgreSQL);
                         tables.Columns["TableName"].ColumnName = "label";
                         tables.Columns["tabledesc"].ColumnName = "TableDesc";
-                        var tablesJson = JsonConvert.SerializeObject(tables).Replace("\r\n", "").Replace("\\r\\n", "");
+                        var tablesJson = JsonConvert.SerializeObject(tables).Replace("\r\n", "").Replace("\\r\\n", "").Replace("\\", "\\\\");
                         tables.Clear(); tables.Dispose(); tables = null;
                         EvaluateJavascript($"setTables('{tablesJson}')", (value, exception) => { });
                     }
@@ -885,10 +912,15 @@ namespace SqlSugar.Tools
                 {
                     try
                     {
+                        var initPath = "";
+                        if (File.Exists($"{Environment.CurrentDirectory}\\default.ini"))
+                        {
+                            initPath = File.ReadAllText($"{Environment.CurrentDirectory}\\default.ini", Encoding.Default);
+                        }
                         var infos = JsonConvert.DeserializeObject<Dictionary<string, string>>(info);
                         var settings = JsonConvert.DeserializeObject<SettingsModel>(infos["settings"]);
                         var tableList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(infos["tableList"]);
-                        using (var folderBrowserDialog = new FolderBrowserDialog())
+                        using (var folderBrowserDialog = new FolderBrowserDialog { SelectedPath = initPath })
                         {
                             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                             {
@@ -899,6 +931,10 @@ namespace SqlSugar.Tools
                                     {
                                         await sw.WriteAsync(code);
                                     }
+                                }
+                                using (StreamWriter sw = new StreamWriter($"{Environment.CurrentDirectory}\\default.ini"))
+                                {
+                                    await sw.WriteAsync(folderBrowserDialog.SelectedPath);
                                 }
                                 EvaluateJavascript("saveAllTablesSuccess()", (value, exception) => { });
                             }
@@ -973,7 +1009,7 @@ namespace SqlSugar.Tools
                         var tables = await this.LoadingTables(linkString, DataBaseType.Oracler);
                         tables.Columns["TableName"].ColumnName = "label";
                         tables.Columns["tabledesc"].ColumnName = "TableDesc";
-                        var tablesJson = JsonConvert.SerializeObject(tables).Replace("\r\n", "").Replace("\\r\\n", "");
+                        var tablesJson = JsonConvert.SerializeObject(tables).Replace("\r\n", "").Replace("\\r\\n", "").Replace("\\", "\\\\");
                         tables.Clear(); tables.Dispose(); tables = null;
                         EvaluateJavascript($"setTables('{tablesJson}')", (value, exception) => { });
                     }
@@ -1099,10 +1135,15 @@ namespace SqlSugar.Tools
                 {
                     try
                     {
+                        var initPath = "";
+                        if (File.Exists($"{Environment.CurrentDirectory}\\default.ini"))
+                        {
+                            initPath = File.ReadAllText($"{Environment.CurrentDirectory}\\default.ini", Encoding.Default);
+                        }
                         var infos = JsonConvert.DeserializeObject<Dictionary<string, string>>(info);
                         var settings = JsonConvert.DeserializeObject<SettingsModel>(infos["settings"]);
                         var tableList = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(infos["tableList"]);
-                        using (var folderBrowserDialog = new FolderBrowserDialog())
+                        using (var folderBrowserDialog = new FolderBrowserDialog { SelectedPath = initPath })
                         {
                             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                             {
@@ -1113,6 +1154,10 @@ namespace SqlSugar.Tools
                                     {
                                         await sw.WriteAsync(code);
                                     }
+                                }
+                                using (StreamWriter sw = new StreamWriter($"{Environment.CurrentDirectory}\\default.ini"))
+                                {
+                                    await sw.WriteAsync(folderBrowserDialog.SelectedPath);
                                 }
                                 EvaluateJavascript("saveAllTablesSuccess()", (value, exception) => { });
                             }
@@ -1182,7 +1227,7 @@ namespace SqlSugar.Tools
             switch (type)
             {
                 case DataBaseType.SQLServer:
-                    var sql = @"select name as TableName, ISNULL(j.TableDesc, '') as TableDesc  From SysObjects g
+                    var sql = @"select name as TableName, ISNULL(j.TableDesc, '') as TableDesc  From sysobjects g
 left join
 (
 select * from
@@ -1204,7 +1249,7 @@ on
 	Where g.xtype='U'
 	order by TableName ASC";
                     var table1 = await SQLServerHelper.QueryDataTable(linkString, sql);
-                    sql = @"select name as TableName,'' as TableDesc   From SysObjects j where j.xtype='V' order by name asc";
+                    sql = @"select name as TableName,'' as TableDesc   From sysobjects j where j.xtype='V' order by name asc";
                     var table2 = await SQLServerHelper.QueryDataTable(linkString, sql);
                     DataTable newDataTable = table1.Clone();
                     object[] obj = new object[newDataTable.Columns.Count];
@@ -1239,7 +1284,7 @@ FROM
 	pg_class t1
 	LEFT JOIN pg_tables t2 ON t1.relname = t2.tablename 
 WHERE
-	t2.tableowner != 'postgres' 
+	t2.schemaname = 'public'
 ORDER BY
 	t1.relname ASC";
                     return await PostgreSqlHelper.QueryDataTable(linkString, sql2);
@@ -1315,7 +1360,7 @@ ORDER BY
             if (type == DataBaseType.SQLServer)
             {
                 tableInfo = await SQLServerHelper.QueryTableInfo(linkString, $"select * from [{nodeName}] where 1=2");
-                colsInfos = await SQLServerHelper.QueryDataTable(linkString, "SELECT OBJNAME,VALUE FROM ::FN_LISTEXTENDEDPROPERTY (NULL, 'USER', 'DBO', 'TABLE', '" + nodeName + "', 'COLUMN', DEFAULT)", null);
+                colsInfos = await SQLServerHelper.QueryDataTable(linkString, "SELECT objname,value FROM ::fn_listextendedproperty (NULL, 'user', 'dbo', 'table', '" + nodeName + "', 'column', DEFAULT)", null);
                 this.GetCode(
                     tableInfo,
                     colsInfos,

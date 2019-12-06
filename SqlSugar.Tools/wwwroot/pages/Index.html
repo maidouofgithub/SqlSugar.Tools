@@ -19,8 +19,14 @@
             <el-tooltip class="item" effect="dark" content="最小化" placement="right">
                 <el-button n-ui-command="minimize" style="top:110px" class="tool-btn" icon="el-icon-minus" circle size="small"></el-button>
             </el-tooltip>
+            <el-tooltip v-if="particlesJSSwitch === '1'" class="item" effect="dark" content="关闭背景特效, 减少CPU占用" placement="right">
+                <el-button @click="closeParticles" style="top:160px" class="tool-btn" icon="el-icon-picture-outline" circle size="small"></el-button>
+            </el-tooltip>
+            <el-tooltip v-else class="item" effect="dark" content="打开背景特效, 会占用3%左右的CPU" placement="right">
+                <el-button @click="openParticles" style="top:160px" class="tool-btn" icon="el-icon-picture" circle size="small"></el-button>
+            </el-tooltip>
         </div>
-        <div id="td"></div>
+        <div id="td" style="top:195px;"></div>
         <h1 style="text-align:center;color:#444;font-family:微软雅黑">SQL Sugar ORM 工具箱</h1>
         <el-row :gutter="20" class="panel-group">
             <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" onclick="toWord()">
@@ -46,6 +52,19 @@
                     <div class="card-panel-description">
                         <div class="card-panel-text">实体类生成</div>
                         <span>SQL Sugar ORM</span>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" onclick="showDBMove()">
+                <div class="card-panel">
+                    <div class="card-panel-icon-wrapper icon-people">
+                        <svg class="" style="width:35px;height:35px;">
+                            <image xlink:href="../svg/settings.svg" width="35px" height="35px"></image>
+                        </svg>
+                    </div>
+                    <div class="card-panel-description">
+                        <div class="card-panel-text">数据库迁移</div>
+                        <span>从一个数据库迁移到另一个数据库</span>
                     </div>
                 </div>
             </el-col>
@@ -75,20 +94,7 @@
                     </div>
                 </div>
             </el-col>
-            <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-                <div class="card-panel">
-                    <div class="card-panel-icon-wrapper icon-people">
-                        <svg class="" style="width:35px;height:35px;">
-                            <image xlink:href="../svg/settings.svg" width="35px" height="35px"></image>
-                        </svg>
-                    </div>
-                    <div class="card-panel-description">
-                        <div class="card-panel-text">设置</div>
-                        <span>SQL Sugar ORM</span>
-                    </div>
-                </div>
-            </el-col>
-            <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+            <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" onclick="showPay()">
                 <div class="card-panel">
                     <div class="card-panel-icon-wrapper icon-people">
                         <svg class="" style="width:35px;height:35px;">
@@ -96,8 +102,8 @@
                         </svg>
                     </div>
                     <div class="card-panel-description">
-                        <div class="card-panel-text">关于</div>
-                        <span>SQL Sugar ORM</span>
+                        <div class="card-panel-text">捐赠/关于</div>
+                        <span>如果该工具为你提供了便利, 可以适当给予捐赠</span>
                     </div>
                 </div>
             </el-col>
@@ -109,9 +115,21 @@
             <el-tag class="qqTag" type="danger" onclick="qq.addedQun('http://shang.qq.com/wpa/qunwpa?idkey=9f67b12250f496ca92e8615faeed11bd79fd8163ff51e03f002cd79561af3b27')">三群: 654015377</el-tag>
             <p style="font-size:12px;color:#666">请不要重复申请入群, 添加一个群即可, 留下位置给更多需要的人. </p>
         </div>
+        <div id="particles-js"></div>
+        <el-dialog class="my-pay" :visible.sync="dialogVisible" :close-on-click-modal="false" top="20px" width="90%">
+            <div>
+                <p>如果该工具为你提供了便利, 您可以根据自己的经济情况, 给予适当的捐赠, 支持开发者的维护</p>
+                <p>本工具BUG反馈请加下面的三个群之一, 进行反馈</p>
+                <p>本工具Github地址: <el-tag type="success" onclick="qq.addedQun('https://github.com/q7164518/SqlSugar.Tools')">单击我查看</el-tag></p>
+            </div>
+            <div style="text-align:center">
+                <img src="../img/pay.png" style="height:388px" />
+            </div>
+        </el-dialog>
     </div>
 </body>
 </html>
+<script src="../js/particles.js"></script>
 <script src="../js/vue.js"></script>
 <script src="../js/element.js"></script>
 <script src="../js/index.js"></script>
